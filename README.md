@@ -44,6 +44,8 @@ A facial recognition webcam c++20 program
       -D BUILD_EXAMPLES=ON \
       -D BUILD_SHARED_LIBS=ON \
       -D ENABLE_PRECOMPILED_HEADERS=OFF \
+      -D ENABLE_NEON=ON \
+      -D ENABLE_VFPV4=ON \
       -D OPENCV_GENERATE_PKGCONFIG=ON ..
 
     ```
