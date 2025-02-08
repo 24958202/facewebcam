@@ -1,0 +1,8 @@
+[Desktop Entry]  
+Name=FaceWebCam  
+Comment=FaceWebCam Application  
+Exec=@CMAKE_INSTALL_PREFIX@/bin/FaceWebCam  
+Icon=@CMAKE_INSTALL_PREFIX@/share/icons/facewebcam.xpm  
+Terminal=false  
+Type=Application  
+Categories=Graphics;Utility;

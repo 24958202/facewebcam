@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Application Name -->
+    <key>CFBundleName</key>
+    <string>FaceWebCam</string>
+
+    <!-- Display Name in the macOS UI -->
+    <key>CFBundleDisplayName</key>
+    <string>FaceWebCam</string>
+
+    <!-- Unique Identifier for the App -->
+    <key>CFBundleIdentifier</key>
+    <string>com.dengfeng.myapp</string>
+
+    <!-- Version of Your Application -->
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+
+    <!-- Executable File Name -->
+    <key>CFBundleExecutable</key>
+    <string>FaceWebCam</string>
+
+    <!-- App Icon File Name (No .icns extension) -->
+    <key>CFBundleIconFile</key>
+    <string>FaceWebCam</string>
+
+    <!-- Continuity Camera Usage Key -->
+    <key>NSCameraUseContinuityCameraDeviceType</key>
+    <true/>
+</dict>
+</plist>
+
