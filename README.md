@@ -57,7 +57,7 @@ A facial recognition webcam c++20 program
 
     ```
     ******************************************
-    If you had the following error:
+    If you have the following error:
     /home/user123/user123/libs/opencv/build/modules/imgproc/opencl_kernels_imgproc.cpp:879:1: error: unable to find string literal operator ‘operator""d41d8cd98f00b204e9800998ecf8427e’ with ‘const char [3]’, ‘long unsigned int’ arguments
   879 | ", "d41d8cd98f00b204e9800998ecf8427e", NULL};
 
