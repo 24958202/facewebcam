@@ -91,3 +91,8 @@ A facial recognition webcam c++20 program
     - Ensure that the `opencv_contrib` modules are included during the build process by specifying the `OPENCV_EXTRA_MODULES_PATH` in the `cmake` command.
     - If you encounter any issues, refer to the official OpenCV documentation: https://docs.opencv.org/
 
+## Installing wxWidgets
+https://docs.wxwidgets.org/3.2/overview_install.html
+
+
+
