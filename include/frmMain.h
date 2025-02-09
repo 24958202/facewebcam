@@ -79,6 +79,7 @@ private:
 	*/
     frmWebCamSetup* webcamSetupFrame = nullptr;
     frmFaceDetectionSetup* faceSetupFrame = nullptr;
+	void iniWebCam();
 	void getMaxStrangersCount(unsigned int);
 	void setMaxStrangersCount(unsigned int);
     void OnWebCamSetup(wxCommandEvent& event);   // Open the sub-frame
