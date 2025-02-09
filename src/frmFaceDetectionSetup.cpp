@@ -249,9 +249,10 @@ void frmFaceDetectionSetup::OnTimer(wxTimerEvent& event){
     try {
         // Convert BGR to RGB for wxWidgets
         cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
+		cv::Mat low_quality_frame = frame / (256 / cvMatlevels) * (256 / cvMatlevels);
         // Resize the frame to fit the wxStaticBitmap
         cv::Mat resized_frame;
-        cv::resize(frame, resized_frame, cv::Size(300, 200));
+        cv::resize(low_quality_frame, resized_frame, cv::Size(300, 200));
 		cv::Mat gray;  
 		cv::cvtColor(resized_frame, gray, cv::COLOR_BGR2GRAY);  
 		std::vector<cv::Rect> faces;  

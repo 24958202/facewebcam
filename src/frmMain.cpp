@@ -158,27 +158,7 @@ frmMain::frmMain(const wxString& title)
 	 * Check webcam configuration file 
 	 */
 	// --- Load webcam configuration ---
-	std::string webConfigFile = CurrDir + "/webCamConfig.dat";
-	if (std::filesystem::exists(webConfigFile)) {
-		webcam_index = nemswebcam_j.ReadBinaryOne_from_std(webConfigFile);
-		if(webcam_index.empty()){
-			wxMessageBox("Error: Faile to open the webcam's configuration file!Please reselect your webcam's index.", "Error", wxICON_ERROR);
-			webcam_index = "WebCam 0"; // Default value
-		}
-		else{
-			// --- Start webcam video stream ---
-			webcam_index = webcam_index.substr(7,1);
-		}
-		/*
-		 * Start webcam 
-		 */
-		start_webcam();
-	} else {
-		webcam_index = "WebCam 0"; // Default value
-		//Open the webcam setup window
-		wxCommandEvent dummyEvent;
-		OnWebCamSetup(dummyEvent);
-	}
+	iniWebCam();
 }
 frmMain::~frmMain() {
 	stop_webcam();
@@ -196,6 +176,37 @@ frmMain::~frmMain() {
 /*
  * Sub forms event
  */
+void frmMain::iniWebCam(){
+	try{
+		std::string webConfigFile = CurrDir + "/webCamConfig.dat";
+		if (std::filesystem::exists(webConfigFile)) {
+			webcam_index = nemswebcam_j.ReadBinaryOne_from_std(webConfigFile);
+			if(webcam_index.empty()){
+				wxMessageBox("Error: Faile to open the webcam's configuration file!Please reselect your webcam's index.", "Error", wxICON_ERROR);
+				webcam_index = "WebCam 0"; // Default value
+			}
+			else{
+				// --- Start webcam video stream ---
+				webcam_index = webcam_index.substr(7,1);
+			}
+			/*
+			 * Start webcam 
+			 */
+			start_webcam();
+		} else {
+			webcam_index = "WebCam 0"; // Default value
+			//Open the webcam setup window
+			wxCommandEvent dummyEvent;
+			OnWebCamSetup(dummyEvent);
+		}
+	}
+	catch(const std::exception& ex){
+		std::cerr << ex.what() << std::endl;
+	}
+	catch(...){
+		std::cerr << "Unknown errors" << std::endl;
+	}
+}
 void frmMain::getMaxStrangersCount(unsigned int stranger_id_count){
 	try{
 		if(std::filesystem::exists(CurrDir + "/stranger_id.txt")){
@@ -338,7 +349,7 @@ void frmMain::OnWebCamSetup_Closed(wxCloseEvent& event){
 	// Reset the pointer to allow reopening the window
     webcamSetupFrame = nullptr;
 	start_webcam();
-    // Proceed with the default close behavior
+	// Proceed with the default close behavior
     event.Skip();
 }
 void frmMain::OnFaceRecognitionSetup(wxCommandEvent& WXUNUSED(event)) {
@@ -503,7 +514,7 @@ void frmMain::onFacesDetected(const std::vector<cv::Rect>& faces, cv::Mat& frame
 		for(size_t i = 0; i < faces.size(); ++i){
 			cv::Rect faceROI = faces[i]; // Save the first detected face
 			cv::Mat faceImage = frame(faceROI).clone();
-			cv::resize(faceImage, faceImage, cv::Size(128, 128));  
+			cv::resize(faceImage, faceImage, cv::Size(80, 80));  
 			std::string str_return = checkExistingFace(faceImage,lib_face_recog::CURRENT_FaceType::face_friends);
 			if(!str_return.empty()){
 				if(str_return == "friends_info_empty"){
@@ -604,7 +615,7 @@ void frmMain::OnTimer(wxTimerEvent& event) {
 			cv::Mat low_quality_frame = uiFrame / (256 / cvMatlevels) * (256 / cvMatlevels);
 			// Resize the frame to fit the wxStaticBitmap
 			cv::Mat resized_frame;
-			cv::resize(low_quality_frame, resized_frame, cv::Size(1024, 768));//0.5, 0.5
+			cv::resize(low_quality_frame, resized_frame, cv::Size(640, 320));//0.5, 0.5
 			libface_j.AddDateTimeOverlay(resized_frame);
 			/*
 			 * Facial detection 
@@ -612,7 +623,7 @@ void frmMain::OnTimer(wxTimerEvent& event) {
 			cv::Mat gray;  
 			cv::cvtColor(resized_frame, gray, cv::COLOR_BGR2GRAY);  
 			std::vector<cv::Rect> faces;  
-			faceCascade.detectMultiScale(gray, faces, 1.1, 10, 0 | cv::CASCADE_SCALE_IMAGE, cv::Size(100, 100));  
+			faceCascade.detectMultiScale(gray, faces, 1.1, 10, 0 | cv::CASCADE_SCALE_IMAGE, cv::Size(50, 50));  
 			if (!faces.empty()) {  
 				onFacesDetected(faces, resized_frame);  
 			}  
@@ -639,7 +650,7 @@ void frmMain::capture_thread_webcam(){
 				std::lock_guard<std::mutex> lock(frameMutex);
 				frame = tempFrame.clone();
 			}
-			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			std::this_thread::sleep_for(std::chrono::milliseconds(20));
 		}
 	}
 	catch(const std::exception& ex){
