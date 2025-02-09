@@ -107,9 +107,8 @@ cd wxWidgets
 git checkout latest-stable  
 Build wxWidgets:
 
-mkdir build-gtk  
-cd build-gtk  
-../configure --enable-unicode --enable-debug --with-gtk=3  
+in the root of the folder:
+./configure --enable-unicode --enable-debug --with-gtk=3  
 make -j$(nproc)  
 sudo make install  
 sudo ldconfig  
@@ -130,7 +129,7 @@ sudo apt install libgtk-3-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-d
 The Raspberry Pi uses an ARM architecture, which may require additional flags during configuration.
 Try adding --host=arm-linux-gnueabihf to the configure command:
 
-../configure --enable-unicode --enable-debug --with-gtk=3 --build=armv7l-unknown-linux-gnueabihf --host=arm-linux-gnueabihf
+./configure --enable-unicode --enable-debug --with-gtk=3 --build=armv7l-unknown-linux-gnueabihf --host=arm-linux-gnueabihf
 
 
 
