@@ -94,5 +94,44 @@ A facial recognition webcam c++20 program
 ## Installing wxWidgets
 https://docs.wxwidgets.org/3.2/overview_install.html
 
+Here’s the general process for installing wxWidgets, which you may have already followed:
+
+Install Dependencies:
+
+sudo apt update  
+sudo apt install build-essential libgtk-3-dev libglu1-mesa-dev libpng-dev libjpeg-dev libtiff-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev  
+Download wxWidgets Source Code:
+
+git clone https://github.com/wxWidgets/wxWidgets.git  
+cd wxWidgets  
+git checkout latest-stable  
+Build wxWidgets:
+
+mkdir build-gtk  
+cd build-gtk  
+../configure --enable-unicode --enable-debug --with-gtk=3  
+make -j$(nproc)  
+sudo make install  
+sudo ldconfig  
+
+Verify Installation:
+Run wx-config --version to confirm the installation.
+
+Possible Issues on Raspberry Pi
+If the above steps worked on Linux/macOS but failed on the Raspberry Pi, here are some potential reasons and solutions:
+
+1. Missing Dependencies
+Raspberry Pi OS may not have all the required libraries installed by default.
+Double-check that all dependencies (e.g., libgtk-3-dev, libgstreamer1.0-dev) are installed. Use:
+
+sudo apt install libgtk-3-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev  
+
+2. Architecture-Specific Issues
+The Raspberry Pi uses an ARM architecture, which may require additional flags during configuration.
+Try adding --host=arm-linux-gnueabihf to the configure command:
+
+../configure --enable-unicode --enable-debug --with-gtk=3 --build=armv7l-unknown-linux-gnueabihf --host=arm-linux-gnueabihf
+
+
 
 
