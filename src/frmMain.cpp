@@ -622,6 +622,7 @@ void frmMain::OnTimer(wxTimerEvent& event) {
 			 */
 			cv::Mat gray;  
 			cv::cvtColor(resized_frame, gray, cv::COLOR_BGR2GRAY);  
+			cv::equalizeHist(gray, gray);//can help the classifier detect faces in varying lighting conditions.
 			std::vector<cv::Rect> faces;  
 			faceCascade.detectMultiScale(gray, faces, 1.1, 10, 0 | cv::CASCADE_SCALE_IMAGE, cv::Size(50, 50));  
 			if (!faces.empty()) {  
